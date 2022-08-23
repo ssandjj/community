@@ -11,6 +11,7 @@ const CertificationSchema = new Schema({
   },
 });
 
+// auth/ctrl/checkEmail에서 생성한 번호 저장.
 CertificationSchema.methods.setNumber = async function (number) {
   this.number = number;
 };

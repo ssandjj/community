@@ -24,11 +24,13 @@ const UserSchema = new Schema({
   },
 });
 
+// hash 패스워드 생성
 UserSchema.methods.setPassword = async function (password) {
   const hash = await bcrypt.hash(password, 10);
   this.hashPassword = hash;
 };
 
+// 패스워드 비교 함수
 UserSchema.methods.checkPassword = async function (password) {
   const comparePasswordResult = await bcrypt.compare(
     password,
@@ -37,9 +39,17 @@ UserSchema.methods.checkPassword = async function (password) {
   return comparePasswordResult;
 };
 
+// certification -> true
+UserSchema.methods.changeCertification = async function () {
+  this.certification = true;
+};
+
+// 이메일 찾기
 UserSchema.statics.findByEmail = function (email) {
   return this.findOne({ email });
 };
+
+// 닉네임 찾기
 UserSchema.statics.findByUserName = function (username) {
   return this.findOne({ username });
 };

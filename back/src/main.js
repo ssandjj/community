@@ -11,6 +11,18 @@ import passport from "passport";
 import passportConfig from "./passport";
 
 // import API Router
+/*
+응답 : 
+{
+  message:'...',
+  data:'...'
+}
+에러 :
+{
+  message:'...',
+  error:'...'
+}
+*/
 import postsRouter from "./api/posts/index";
 import authRouter from "./api/auth/index";
 

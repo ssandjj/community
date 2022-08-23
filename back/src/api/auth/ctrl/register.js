@@ -20,12 +20,19 @@ export const register = async (req, res, next) => {
   const verification = schema.validate(req.body);
 
   if (verification.error) {
-    res.send(err).status(400);
+    res
+      .json({
+        message: "register joi error",
+        error: verification.error,
+      })
+      .status(400);
     return;
   }
 
   const { email, username, password } = req.body;
-  req.session.userMail = email; // 세션 객체 사용.
+
+  // req.session.userMail = email; // 세션 객체 사용.
+
   try {
     const certification = new Certification({ email });
     certification.save();
@@ -36,7 +43,8 @@ export const register = async (req, res, next) => {
     if (eamilExists || usernameExists) {
       res
         .json({
-          error: "이메일, 닉네임이 사용중 입니다.",
+          message: "이메일, 닉네임이 사용중 입니다.",
+          error: "register eamil or user same",
         })
         .status(409);
       return;
@@ -54,8 +62,16 @@ export const register = async (req, res, next) => {
     const userData = user.toJSON();
     delete userData.hashPassword;
 
-    res.send(userData);
+    res.json({
+      message: "register success",
+      data: userData,
+    });
   } catch (err) {
-    res.send(err).status(500);
+    res
+      .json({
+        message: "register api error",
+        error: err,
+      })
+      .status(500);
   }
 };
