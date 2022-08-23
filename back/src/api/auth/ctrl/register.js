@@ -22,7 +22,7 @@ export const register = async (req, res, next) => {
   if (verification.error) {
     res
       .json({
-        message: "register joi error",
+        message: "api auth register joi error",
         error: verification.error,
       })
       .status(400);
@@ -35,7 +35,7 @@ export const register = async (req, res, next) => {
 
   try {
     const certification = new Certification({ email });
-    certification.save();
+    await certification.save();
 
     const eamilExists = await User.findByEmail(email);
     const usernameExists = await User.findByUserName(username);
@@ -43,7 +43,7 @@ export const register = async (req, res, next) => {
     if (eamilExists || usernameExists) {
       res
         .json({
-          message: "이메일, 닉네임이 사용중 입니다.",
+          message: "api auth register 이메일, 닉네임이 사용중 입니다.",
           error: "register eamil or user same",
         })
         .status(409);
@@ -63,13 +63,13 @@ export const register = async (req, res, next) => {
     delete userData.hashPassword;
 
     res.json({
-      message: "register success",
+      message: "api auth register success",
       data: userData,
     });
   } catch (err) {
     res
       .json({
-        message: "register api error",
+        message: "api auth register error",
         error: err,
       })
       .status(500);

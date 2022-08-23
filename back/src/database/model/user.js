@@ -39,11 +39,6 @@ UserSchema.methods.checkPassword = async function (password) {
   return comparePasswordResult;
 };
 
-// certification -> true
-UserSchema.methods.changeCertification = async function () {
-  this.certification = true;
-};
-
 // 이메일 찾기
 UserSchema.statics.findByEmail = function (email) {
   return this.findOne({ email });

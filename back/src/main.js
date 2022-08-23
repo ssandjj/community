@@ -25,6 +25,7 @@ import passportConfig from "./passport";
 */
 import postsRouter from "./api/posts/index";
 import authRouter from "./api/auth/index";
+import emailRouter from "./api/email";
 
 // import dev mode
 import morgan from "morgan";
@@ -50,6 +51,7 @@ app.use(passport.initialize());
 // use API Router
 app.use("/api/posts", postsRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/email", emailRouter);
 
 // listening
 const port = PORT || 4000;
